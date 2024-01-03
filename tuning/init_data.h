@@ -9,4 +9,4 @@ void init_data(particle_t *, int);
 void init_data(particle_t, int);
 #endif
 
-#endif 
+#endif

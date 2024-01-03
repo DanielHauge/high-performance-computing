@@ -7,13 +7,11 @@ LOOPS=1000
 LOGEXT=$CC.dat
 
 /bin/rm -f aos.$LOGEXT soa.$LOGEXT
-for particles in $NPARTS
-do
-    ./aos.${CC} $LOOPS $particles | grep -v CPU >> aos.$LOGEXT
-    ./soa.${CC} $LOOPS $particles | grep -v CPU >> soa.$LOGEXT
+for particles in $NPARTS; do
+	./aos.${CC} $LOOPS $particles | grep -v CPU >>aos.$LOGEXT
+	./soa.${CC} $LOOPS $particles | grep -v CPU >>soa.$LOGEXT
 done
 
 # time to say 'Good bye' ;-)
 #
 exit 0
-

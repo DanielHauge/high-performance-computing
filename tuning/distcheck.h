@@ -9,5 +9,5 @@ double distcheck(particle_t *, int);
 double distcheck(particle_t, int);
 #endif
 
-#define CHECK_FLOP 1	// put the right value here!
+#define CHECK_FLOP 1 // put the right value here!
 #endif
