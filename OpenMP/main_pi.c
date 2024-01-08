@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define N 50000
+#define N 500000
 
 int main(int argc, char *argv[]) {
 

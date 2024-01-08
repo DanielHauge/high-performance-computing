@@ -8,7 +8,7 @@ AUTO := -ftree-parallelize-loops=4 -ffast-math
 build:
 	@echo "Building..."
 	@rm -f $(OUT)
-	@gcc $(SRC) -o $(OUT) -std=gnu99 -O3
+	@gcc $(SRC) -o $(OUT) -std=gnu99 -O3 
 	@echo "O3:"
 	./$(OUT)
 	@gcc $(SRC) -o $(OUT) -std=gnu99 -O3 $(AUTO)
@@ -34,7 +34,7 @@ mxv:
 pi:
 	@echo "Building..."
 	@rm -f $(OUT)
-	@gcc $(SRC_PI) -o $(OUT) -std=gnu99 -O3
+	@gcc $(SRC_PI) -o $(OUT) -std=gnu99 -O3 -ffast-math
 	@echo "O3:"
 	./$(OUT)
 	@gcc $(SRC_PI) -o $(OUT) -std=gnu99 -O3 $(AUTO)
