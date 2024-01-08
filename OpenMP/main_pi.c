@@ -5,7 +5,6 @@
 #define N 500000
 
 int main(int argc, char *argv[]) {
-
   int clockNow = clock();
   double sum = 0.0;
   for (int j = 0; j < 10000; j++) {

@@ -42,4 +42,12 @@ pi:
 	./$(OUT)
 	@gcc $(SRC_PI) -o $(OUT) -std=gnu99 -O3 $(OMP)
 	@echo "O3 + OMP:"
-	OMP_NUM_THREADS=4 ./$(OUT)
+	OMP_NUM_THREADS=1 ./$(OUT)
+	@gcc $(SRC_PI) -o $(OUT) -std=gnu99 -O3 $(OMP)
+	@echo "O3 + OMP:"
+	OMP_NUM_THREADS=2 ./$(OUT)
+	@gcc $(SRC_PI) -o $(OUT) -std=gnu99 -O3 $(OMP)
+	@echo "O3 + OMP:"
+	OMP_NUM_THREADS=8 ./$(OUT)
+
+
