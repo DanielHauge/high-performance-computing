@@ -5,7 +5,12 @@
 #define N 500000
 
 int main(int argc, char *argv[]) {
-  int clockNow = clock();
+  // get wall clock with timespec_get
+#if defined(_OPENMP)
+  double start_time = omp_get_wtime();
+#else
+  double start_time = clock();
+#endif
   double sum = 0.0;
   for (int j = 0; j < 10000; j++) {
     sum = 0;
@@ -19,10 +24,14 @@ int main(int argc, char *argv[]) {
     sum = 1.0 / N * sum;
   }
 
-  int clockEnd = clock();
-  float clockTotal = clockEnd - clockNow;
-  // compute total time
-  float timeTotal = clockTotal / CLOCKS_PER_SEC;
+#if defined(_OPENMP)
+  double end_time = omp_get_wtime();
+#else
+  double end_time = clock();
+#endif
+
+  double timeTotal = end_time - start_time;
+
   printf("timeTotal = %f\n", timeTotal);
   printf("sum = %f\n", sum);
   return EXIT_SUCCESS;
