@@ -24,9 +24,10 @@ main(int argc, char *argv[]) {
        fprintf(stderr, "memory allocation failed!\n");
        return(1);
     }
-
+#pragma omp parallel shared(width, height, image, max_iter)
+{
     mandel(width, height, image, max_iter);
-
+}
     writepng("mandelbrot.png", image, width, height);
 
     return(0);

@@ -7,11 +7,11 @@ mandel(int disp_width, int disp_height, int *array, int max_iter) {
 
     scale_real = 3.5 / (double)disp_width;
     scale_imag = 3.5 / (double)disp_height;
-
+#pragma omp for schedule(dynamic)
     for(i = 0; i < disp_width; i++) {
 
 	x = ((double)i * scale_real) - 2.25; 
-
+	
 	for(j = 0; j < disp_height; j++) {
 	    y = ((double)j * scale_imag) - 1.75; 
 

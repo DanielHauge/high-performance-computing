@@ -1,7 +1,7 @@
 TARGET	= mandelbrot
 OBJS	= main.o mandel.o writepng.o 
 
-OPT	= -g -O3
+OPT	= -g -O3 -fopenmp -ffast-math
 ISA	= 
 PARA	= 
 
@@ -17,7 +17,7 @@ CCC	= g++
 CXX	= g++
 CXXFLAGS= -I $(PNGWRTIPATH)
 
-CFLAGS	= $(OPT) $(ISA) $(PARA) $(XOPT)
+CFLAGS	= $(OPT) $(ISA) $(PARA) $(XOPT) 
 
 F90C  	= gfortran
 LIBS	= -L $(PNGWRTLPATH) -lpngwriter -lpng 
