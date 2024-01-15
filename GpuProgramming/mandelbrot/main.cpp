@@ -1,31 +1,29 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "mandel.h"
 #include "writepng.h"
+#include <stdio.h>
+#include <stdlib.h>
 
+int main(int argc, char *argv[]) {
 
+  int width, height;
+  int max_iter;
+  int *image;
 
-int
-main(int argc, char *argv[]) {
+  width = 4601;
+  height = 4601;
+  max_iter = 400;
 
-    int   width, height;
-    int	  max_iter;
-    int   *image;
+  // command line argument sets the dimensions of the image
+  if (argc == 2)
+    width = height = atoi(argv[1]);
 
-    width    = 4601;
-    height   = 4601;
-    max_iter = 400;
+  image = (int *)malloc(width * height * sizeof(int));
+  if (image == NULL) {
+    fprintf(stderr, "memory allocation failed!\n");
+    return (1);
+  }
+  mandel(width, height, image, max_iter);
+  writepng("mandelbrot.png", image, width, height);
 
-    // command line argument sets the dimensions of the image
-    if ( argc == 2 ) width = height = atoi(argv[1]);
-
-    image = (int *)malloc( width * height * sizeof(int));
-    if ( image == NULL ) {
-       fprintf(stderr, "memory allocation failed!\n");
-       return(1);
-    }
-    mandel(width, height, image, max_iter);
-    writepng("mandelbrot.png", image, width, height);
-
-    return(0);
+  return (0);
 }
