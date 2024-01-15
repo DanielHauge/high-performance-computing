@@ -1,0 +1,55 @@
+========= Invalid __global__ write of size 4 bytes
+=========     at nvkernel_main_F1L6_2_F1L6_4+0x3c0 in /zhome/6c/0/152090/src/high-performance-computing/GpuProgramming/hello-world/helloworld.c:10
+=========     by thread (36,0,0) in block (1,0,0)
+=========     Address 0x10000 is out of bounds
+=========     and is 140295773552640 bytes before the nearest allocation at 0x7f9927c00000 of size 65536 bytes=========     Device Frame:__hxdTargetTeamsBegin+0x8d0
+=========     Device Frame:nvkernel_main_F1L6_2+0xf0 in /zhome/6c/0/152090/src/high-performance-computing/GpuProgramming/hello-world/helloworld.c:6
+=========     Saved host backtrace up to driver entry point at kernel launch time
+=========     Host Frame: [0x32e130]
+=========                in /lib64/libcuda.so.1
+=========     Host Frame:launchInternal in platform_cuda/hxCuda.c:3395 [0x469ee]
+=========                in /appl9/nvhpc/2023_2311/Linux_x86_64/23.11/compilers/lib/libnvomp.so
+=========     Host Frame:hxLaunch in /proj/build/23C/Linux_x86_64/rte/nvomp/src/hxrt/hxInterface.c:159 [0x3e9ec]
+=========                in /appl9/nvhpc/2023_2311/Linux_x86_64/23.11/compilers/lib/libnvomp.so
+=========     Host Frame:launchHXTarget.constprop.0 in /proj/build/23C/Linux_x86_64/rte/nvomp/src/nvomp/nvomp_target.c:459 [0x1e21b]
+=========                in /appl9/nvhpc/2023_2311/Linux_x86_64/23.11/compilers/lib/libnvomp.so
+=========     Host Frame:launchTarget in /proj/build/23C/Linux_x86_64/rte/nvomp/src/nvomp/nvomp_target.c:1197 [0x1efb1]
+=========                in /appl9/nvhpc/2023_2311/Linux_x86_64/23.11/compilers/lib/libnvomp.so
+=========     Host Frame:__nvomp_target in /proj/build/23C/Linux_x86_64/rte/nvomp/src/nvomp/nvomp_target.c:1382 [0x1f801]
+=========                in /appl9/nvhpc/2023_2311/Linux_x86_64/23.11/compilers/lib/libnvomp.so
+=========     Host Frame:main in /zhome/6c/0/152090/src/high-performance-computing/GpuProgramming/hello-world/helloworld.c:17 [0x13f0]
+=========                in /zhome/6c/0/152090/src/high-performance-computing/GpuProgramming/hello-world/./helloworld
+=========     Host Frame:__libc_start_call_main [0x3feb0]
+=========                in /lib64/libc.so.6
+=========     Host Frame:__libc_start_main [0x3ff60]
+=========                in /lib64/libc.so.6
+=========     Host Frame:_start [0x1215]
+=========                in /zhome/6c/0/152090/src/high-performance-computing/GpuProgramming/hello-world/./helloworld
+=========
+========= Program hit CUDA_ERROR_LAUNCH_FAILED (error 719) due to "unspecified launch failure" on CUDA API call to cuStreamSynchronize.
+=========     Saved host backtrace up to driver entry point at error
+=========     Host Frame: [0x32ecad]
+=========                in /lib64/libcuda.so.1
+=========     Host Frame:launchInternal in platform_cuda/hxCuda.c:3437 [0x46a99]
+=========                in /appl9/nvhpc/2023_2311/Linux_x86_64/23.11/compilers/lib/libnvomp.so
+=========     Host Frame:hxLaunch in /proj/build/23C/Linux_x86_64/rte/nvomp/src/hxrt/hxInterface.c:159 [0x3e9ec]
+=========                in /appl9/nvhpc/2023_2311/Linux_x86_64/23.11/compilers/lib/libnvomp.so
+=========     Host Frame:launchHXTarget.constprop.0 in /proj/build/23C/Linux_x86_64/rte/nvomp/src/nvomp/nvomp_target.c:459 [0x1e21b]
+=========                in /appl9/nvhpc/2023_2311/Linux_x86_64/23.11/compilers/lib/libnvomp.so
+=========     Host Frame:launchTarget in /proj/build/23C/Linux_x86_64/rte/nvomp/src/nvomp/nvomp_target.c:1197 [0x1efb1]
+=========                in /appl9/nvhpc/2023_2311/Linux_x86_64/23.11/compilers/lib/libnvomp.so
+=========     Host Frame:__nvomp_target in /proj/build/23C/Linux_x86_64/rte/nvomp/src/nvomp/nvomp_target.c:1382 [0x1f801]
+=========                in /appl9/nvhpc/2023_2311/Linux_x86_64/23.11/compilers/lib/libnvomp.so
+=========     Host Frame:main in /zhome/6c/0/152090/src/high-performance-computing/GpuProgramming/hello-world/helloworld.c:17 [0x13f0]
+=========                in /zhome/6c/0/152090/src/high-performance-computing/GpuProgramming/hello-world/./helloworld
+=========     Host Frame:__libc_start_call_main [0x3feb0]
+=========                in /lib64/libc.so.6
+=========     Host Frame:__libc_start_main [0x3ff60]
+=========                in /lib64/libc.so.6
+=========     Host Frame:_start [0x1215]
+=========                in /zhome/6c/0/152090/src/high-performance-computing/GpuProgramming/hello-world/./helloworld
+=========
+Fatal error: expression 'HX_CU_CALL_CHECK(p_cuStreamSynchronize(stream[dev]))' (value 1) is not equal to expression 'HX_SUCCESS' (value 0)
+========= Error: process didn't terminate successfully
+========= Target application returned an error
+========= ERROR SUMMARY: 2 errors
