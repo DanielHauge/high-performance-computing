@@ -20,11 +20,14 @@ double **dmalloc_2d(int m, int n) {
 }
 
 // matrix vector
-void matrix_vector(double **matrix, double *vector, double *result, int n) {
-#pragma omp target data map(to : matrix[ : N * N + 1], vector[ : N])           \
-    map(from : result[ : N]) {
-#pragma omp target teams loop map(to : matrix[ : N * N + 1], vector[ : N])     \
-    map(from : result[ : N])
+void matrix_vector(double **matrix, double *vector, double *result, int s,
+                   int n) {
+#pragma omp target data map(to : matrix[s : s + n][s : s + n],                 \
+                                vector[s : s + n])                             \
+    map(from : result[s : s + n]) {
+#pragma omp target teams loop map(to : matrix[s : s + n][s : s + n],           \
+                                      vector[s : s + n])                       \
+    map(from : result[s : s + n])
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j++) {
       result[i] += matrix[i][j] * vector[j];
@@ -48,7 +51,7 @@ int main(int argc, char *argv[]) {
   }
 
   for (int i = 0; i < ITER; i++) {
-    matrix_vector(matrix, vector, result, N);
+    matrix_vector(matrix, vector, result, 0, N);
   }
 
   // Print result
