@@ -21,15 +21,13 @@ double **dmalloc_2d(int m, int n) {
 
 // matrix vector
 void matrix_vector(double **matrix, double *vector, double *result, int n) {
-#pragma omp target data map(to : matrix[ : NN], vector[ : N])                  \
-    map(tofrom : result[ : N])
-  {
-#pragma omp target teams loop map(tofrom : matrix[ : N * N], vector[ : N])     \
-    map(tofrom : result[ : N])
-    for (int i = 0; i < n; i++) {
-      for (int j = 0; j < n; j++) {
-        result[i] += matrix[i][j] * vector[j];
-      }
+#pragma omp target data map(to : matrix[ : N * N + 1], vector[ : N])           \
+    map(from : result[ : N]) {
+#pragma omp target teams loop map(to : matrix[ : N * N + 1], vector[ : N])     \
+    map(from : result[ : N])
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      result[i] += matrix[i][j] * vector[j];
     }
   }
 }
