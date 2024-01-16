@@ -9,8 +9,8 @@ int main(int argc, char *argv[]) {
   int max_iter;
   int *image;
 
-  width = 4601;
-  height = 4601;
+  width = 14601;
+ height = 14601;
   max_iter = 400;
 
   // command line argument sets the dimensions of the image
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     return (1);
   }
   mandel(width, height, image, max_iter);
-  writepng("mandelbrot.png", image, width, height);
+//  writepng("mandelbrot.png", image, width, height);
 
   return (0);
 }
