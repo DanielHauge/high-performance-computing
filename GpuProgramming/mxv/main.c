@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define ITER 500
-#define N 5000
-#define NN 5000 * 5000
+#define N 500
+#define NN N*N
 double **dmalloc_2d(int m, int n) {
   if (m <= 0 || n <= 0)
     return NULL;
@@ -23,7 +23,7 @@ double **dmalloc_2d(int m, int n) {
 // matrix vector
 void matrix_vector(double **matrix, double *vector, double *result) {
   double t = omp_get_wtime();
-#pragma omp taget data map(to : matrix[0 : N / 2][0 : N / 2],                  \
+#pragma omp target data map(to : matrix[0 : N / 2][0 : N / 2],                  \
                                vector[0 : N / 2])                              \
     map(from : result[0 : N / 2])
   {
@@ -38,9 +38,9 @@ void matrix_vector(double **matrix, double *vector, double *result) {
         result[i] += matrix[i][j] * vector[j];
       }
     }
-    printf("1. w/o allo: %f\n", omp_get_wtime() - t);
+    //printf("1. w/o allo: %f\n", omp_get_wtime() - t);
   }
-  printf("1. w allo: %f\n", omp_get_wtime() - t);
+  //printf("1. w allo: %f\n", omp_get_wtime() - t);
   double t2 = omp_get_wtime();
 #pragma omp target data map(to : matrix[N / 2 : N / 2][0 : N / 2],             \
                                 vector[0 : N / 2])
@@ -56,9 +56,9 @@ void matrix_vector(double **matrix, double *vector, double *result) {
         result[i] += matrix[i][j] * vector[j];
       }
     }
-    printf("2. w/o allo: %f\n", omp_get_wtime() - t);
+    //printf("2. w/o allo: %f\n", omp_get_wtime() - t);
   }
-  printf("2. w allo: %f\n", omp_get_wtime() - t2);
+  //printf("2. w allo: %f\n", omp_get_wtime() - t2);
 
 #pragma omp taskwait
 }
