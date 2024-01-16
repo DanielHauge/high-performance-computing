@@ -77,9 +77,14 @@ int main(int argc, char *argv[]) {
       matrix[i][j] = (double)i + j;
     }
   }
-
+  double smalest_t = 100000000;
   for (int i = 0; i < ITER; i++) {
+    double t = omp_get_wtime();
     matrix_vector(matrix, vector, result);
+    double elapsed = omp_get_wtime() - t;
+    if (elapsed < smalest_t) {
+      smalest_t = elapsed;
+    }
   }
 
   // Print result
@@ -87,6 +92,6 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < N; i++) {
     d += result[i];
   }
-  printf("%f", d);
+  printf("Runtime: %f\n", smalest_t);
   return EXIT_SUCCESS;
 }
