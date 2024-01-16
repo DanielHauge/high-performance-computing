@@ -20,19 +20,28 @@ double **dmalloc_2d(int m, int n) {
 }
 
 // matrix vector
-void matrix_vector(double **matrix, double *vector, double *result, int s,
-                   int n) {
-#pragma omp target data map(to : matrix[s : s + n][s : s + n],                 \
-                                vector[s : s + n])                             \
-    map(from : result[s : s + n]) {
-#pragma omp target teams loop map(to : matrix[s : s + n][s : s + n],           \
-                                      vector[s : s + n])                       \
-    map(from : result[s : s + n])
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < n; j++) {
+void matrix_vector(double **matrix, double *vector, double *result) {
+#pragma omp target teams distribute parallel for nowait num_teams(N / 2)       \
+    thread_limit(1) device(0)                                                  \
+    map(to : matrix[0 : N / 2][0 : N / 2], vector[0 : N / 2])                  \
+    map(from : result[0 : N / 2])
+  for (int i = 0; i < N / 2; i++) {
+    for (int j = 0; j < N / 2; j++) {
       result[i] += matrix[i][j] * vector[j];
     }
   }
+
+#pragma omp target teams distribute parallel for nowait num_teams(N / 2)       \
+    thread_limit(1) device(1)                                                  \
+    map(to : matrix[N / 2 : N / 2][N / 2 : N / 2], vector[N / 2 : N / 2])      \
+    map(from : result[N / 2 : N / 2])
+  for (int i = N / 2; i < N; i++) {
+    for (int j = N / 2; j < N; j++) {
+      result[i] += matrix[i][j] * vector[j];
+    }
+  }
+
+#pragma omp taskwait
 }
 
 int main(int argc, char *argv[]) {
