@@ -19,3 +19,8 @@ Using parallel threads is another way to achieve high performant code.
 There are many ways to achieve this, one such way is to split the workload and assign threads to compute partial results, and then collect the results.
 OpenMP is a library which can be used to make the process of splitting workloads easier.
 OpenMP works for C and can for example generically split loop workloads and automatically create a threadpool and assigning/collecting work.
+
+## GPU Programming
+
+Using the GPU can achieve high parallelization.
+OpenMP has directives for offloading work to the GPU.
