@@ -2,20 +2,23 @@
 #include <stdlib.h>
 #define ITER 500
 #define N 5000
-#define NN 5000*5000
+
 double** dmalloc_2d(int m, int n) { if (m <= 0 || n <= 0) return NULL; double **A = (double**)malloc(m * sizeof(double *)); if (A == NULL) return NULL; A[0] = (double *)malloc(m*n*sizeof(double)); if (A[0] == NULL) { free(A); return NULL; } for (int i = 1; i < m; i++) A[i] = A[0] + i * n; return A; }
 
 
 // matrix vector
 void matrix_vector(double **matrix, double *vector, double *result, int n) {
-#pragma omp target data map(to:matrix[:NN],vector[:N]) map(tofrom:result[:N])
-  {
-#pragma omp target teams loop map(tofrom:matrix[:N*N],vector[:N]) map(tofrom:result[:N])
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < n; j++) {
-       result[i]+= matrix[i][j] * vector[j];
+//#pragma omp parallel for
+	int i,j;
+#pragma omp parallel for default(none) shared(matrix,vector,n, result) private(i,j)
+  for (i = 0; i < n; i++) {
+	  double gg = 0;
+    for (j = 0; j < n; j++) {
+       gg+= matrix[i][j] * vector[j];
     }
-  }
+
+	#pragma omp critical
+    result[i] += gg;
   }
 }
 
